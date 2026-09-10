@@ -23,8 +23,8 @@ const CONFIG = {
   USE_DEMO_DATA: true,               // false => read from Supabase instead
 
   // --- Supabase (anon/public key only — safe to expose client-side) -
-  SUPABASE_URL: 'https://YOUR-PROJECT-REF.supabase.co',
-  SUPABASE_ANON_KEY: 'YOUR-SUPABASE-ANON-PUBLIC-KEY',
+  SUPABASE_URL: 'https://tknbijlujridmztkuulp.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_w9SZthdAa3avUbLchfxb7Q_FpVJ6GNu',
 
   // --- Map defaults --------------------------------------------------
   // Centered on the average of the 5 real watershed sites (CD01–CD05);
