@@ -56,11 +56,11 @@ const DEMO_DATA = (() => {
   // placeholder/fake URLs here — leave null until a real URL exists,
   // which is exactly what these rows do right now.
   const satellite_analysis = [
-    { intervention_id: 'CD01', before_date: null, after_date: null, before_image_url: null, after_image_url: null },
-    { intervention_id: 'CD02', before_date: null, after_date: null, before_image_url: null, after_image_url: null },
-    { intervention_id: 'CD03', before_date: null, after_date: null, before_image_url: null, after_image_url: null },
-    { intervention_id: 'CD04', before_date: null, after_date: null, before_image_url: null, after_image_url: null },
-    { intervention_id: 'CD05', before_date: null, after_date: null, before_image_url: null, after_image_url: null }
+    { intervention_id: 'CD01', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD01/CD01_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD01/CD01_after.jpg' },
+    { intervention_id: 'CD02', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD02/CD02_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD02/CD02_after.jpg' },
+    { intervention_id: 'CD03', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD03/CD03_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD03/CD03_after.jpg' },
+    { intervention_id: 'CD04', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD04/CD04_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD04/CD04_after.jpg' },
+    { intervention_id: 'CD05', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD05/CD05_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD05/CD05_after.jpg' }
   ];
 
   // No LULC data yet — intentionally empty (per task: do not fabricate values).
