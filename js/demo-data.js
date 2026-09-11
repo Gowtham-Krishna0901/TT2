@@ -56,11 +56,16 @@ const DEMO_DATA = (() => {
   // placeholder/fake URLs here — leave null until a real URL exists,
   // which is exactly what these rows do right now.
   const satellite_analysis = [
-    { intervention_id: 'CD01', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD01/CD01_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD01/CD01_after.jpg' },
-    { intervention_id: 'CD02', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD02/CD02_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD02/CD02_after.jpg' },
-    { intervention_id: 'CD03', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD03/CD03_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD03/CD03_after.jpg' },
-    { intervention_id: 'CD04', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD04/CD04_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD04/CD04_after.jpg' },
-    { intervention_id: 'CD05', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD05/CD05_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD05/CD05_after.jpg' }
+    { intervention_id: 'CD01', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD01/CD01_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD01/CD01_after.jpg',before_ndvi: 0.3298, after_ndvi: 0.4357, ndvi_change: 0.1059,
+      before_ndwi: -0.3215, after_ndwi: -0.4230, ndwi_change: -0.1015 },
+    { intervention_id: 'CD02', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD02/CD02_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD02/CD02_after.jpg',before_ndvi: 0.1163, after_ndvi: 0.1121, ndvi_change: -0.0042,
+      before_ndwi: -0.1479, after_ndwi: -0.1052, ndwi_change: 0.0427 },
+    { intervention_id: 'CD03', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD03/CD03_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD03/CD03_after.jpg',before_ndvi: 0.2615, after_ndvi: 0.3259, ndvi_change: 0.0644,
+      before_ndwi: -0.3001, after_ndwi: -0.2726, ndwi_change: 0.0275 },
+    { intervention_id: 'CD04', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD04/CD04_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD04/CD04_after.jpg',before_ndvi: 0.1476, after_ndvi: 0.2772, ndvi_change: 0.1296,
+      before_ndwi: -0.1399, after_ndwi: -0.2657, ndwi_change: -0.1258 },
+    { intervention_id: 'CD05', before_date: null, after_date: null, before_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD05/CD05_before.jpg', after_image_url: 'https://tknbijlujridmztkuulp.supabase.co/storage/v1/object/public/satellite/CD05/CD05_after.jpg',before_ndvi: 0.3714, after_ndvi: 0.5226, ndvi_change: 0.1512,
+      before_ndwi: -0.3554, after_ndwi: -0.4729, ndwi_change: -0.1175 }
   ];
 
   // No LULC data yet — intentionally empty (per task: do not fabricate values).
