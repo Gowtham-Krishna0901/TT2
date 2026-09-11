@@ -212,8 +212,7 @@ const UI = (() => {
           <div class="state-block state-empty">
             <p>No satellite analysis data available yet for this intervention.</p>
           </div>
-        </div>
-        ${fieldEvidencePanel(evidence)}`;
+        </div>`;
       return;
     }
 
@@ -295,22 +294,27 @@ const UI = (() => {
             <thead><tr><th>Category</th><th>Before</th><th>After</th><th>Change</th></tr></thead>
             <tbody>${lulcRows}</tbody>
           </table>
-          <div class="analysis-lulc-chart-box"><canvas id="chartLulcAnalysis"></canvas></div>
+          <div class="lulc-chart-status-row">
+            <div class="analysis-lulc-chart-box"><canvas id="chartLulcAnalysis"></canvas></div>
+            <div class="lulc-status-side">
+              <span class="badge badge-large ${overallMeta.className}">${overallMeta.symbol} ${overallMeta.label}</span>
+              <p class="impact-explanation">${escapeHtml(impactResult.explanation)}</p>
+            </div>
+          </div>
           <p class="muted-small" style="margin-top:8px;">
             ${lulcIsDerived
               ? 'Estimated from this intervention\u2019s NDVI/NDWI values (fractional-cover approximation) — not a field-verified classification. See js/impact.js.'
               : 'Field-verified LULC classification.'}
           </p>
-        ` : `<p class="muted">No LULC analysis data available yet for this intervention.</p>`}
-      </div>
-
-      <div class="analysis-panel analysis-impact-panel">
-        <span class="badge badge-large ${overallMeta.className}">${overallMeta.symbol} ${overallMeta.label}</span>
-        <p class="impact-explanation" style="flex:1;min-width:180px;margin:0;">${escapeHtml(impactResult.explanation)}</p>
+        ` : `
+          <p class="muted">No LULC analysis data available yet for this intervention.</p>
+          <div class="lulc-chart-status-row lulc-chart-status-row-nograph">
+            <span class="badge badge-large ${overallMeta.className}">${overallMeta.symbol} ${overallMeta.label}</span>
+            <p class="impact-explanation">${escapeHtml(impactResult.explanation)}</p>
+          </div>
+        `}
       </div>
       <p class="disclaimer">Prototype rule-based assessment — not a scientifically validated model. See js/impact.js.</p>
-
-      ${fieldEvidencePanel(evidence)}
     `;
 
     // Charts must be rendered after the canvases above exist in the DOM.
