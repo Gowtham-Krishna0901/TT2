@@ -20,7 +20,7 @@ const CONFIG = {
   APP_TAGLINE: 'Smart Watershed Monitoring System',
 
   // --- Data source -------------------------------------------------
-  USE_DEMO_DATA: true,               // false => read from Supabase instead
+  USE_DEMO_DATA: false,               // false => read from Supabase instead
 
   // --- Supabase (anon/public key only — safe to expose client-side) -
   SUPABASE_URL: 'https://tknbijlujridmztkuulp.supabase.co',
