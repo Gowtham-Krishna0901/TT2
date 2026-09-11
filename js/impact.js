@@ -127,26 +127,76 @@ const IMPACT = (() => {
   }
 
   /**
-   * Turns a lulc_analysis row into a category list derived from
-   * whatever before_X / after_X column pairs are actually present,
-   * instead of a hardcoded 5-category list. This is what lets both
-   * the LULC table (ui.js) and the LULC chart (charts.js) support
-   * real QGIS data that may add/rename land-cover classes, without
-   * duplicating the parsing logic in two places.
+   * LULC is intentionally limited to these two categories only
+   * (Vegetation, Water) — no Agriculture / Built-up / Bare Land.
+   * Any before_X/after_X pair outside this whitelist on a lulc row
+   * (e.g. an older/wider QGIS export) is ignored, not displayed.
+   */
+  const LULC_CATEGORY_KEYS = ['vegetation', 'water'];
+
+  /**
+   * Turns a lulc_analysis-shaped row (real DB row OR the output of
+   * deriveLulcFromIndices() below — same shape) into the Vegetation/
+   * Water category list used by both the LULC table (ui.js) and the
+   * LULC chart (charts.js).
    */
   function lulcCategories(lulc) {
     if (!lulc) return [];
-    const labelOverrides = { bare_land: 'Bare Land', builtup: 'Built-up' };
-    const keys = Object.keys(lulc)
-      .filter(k => k.startsWith('before_') && lulc[k] !== null && lulc[k] !== undefined)
-      .map(k => k.slice('before_'.length));
+    return LULC_CATEGORY_KEYS
+      .filter(key => lulc['before_' + key] !== null && lulc['before_' + key] !== undefined)
+      .map(key => {
+        const before = Number(lulc['before_' + key] ?? 0);
+        const after = Number(lulc['after_' + key] ?? 0);
+        const label = key.charAt(0).toUpperCase() + key.slice(1);
+        return { key, label, before, after, change: after - before };
+      });
+  }
 
-    return keys.map(key => {
-      const before = Number(lulc['before_' + key] ?? 0);
-      const after = Number(lulc['after_' + key] ?? 0);
-      const label = labelOverrides[key] || (key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' '));
-      return { key, label, before, after, change: after - before };
-    });
+  /**
+   * DERIVED LULC — ESTIMATE, NOT A FIELD CLASSIFICATION.
+   * ------------------------------------------------------------------
+   * We only have one scalar NDVI/NDWI value per watershed (no pixel
+   * raster), so we can't do a real per-pixel land-cover classification
+   * client-side. This instead applies the standard "fractional cover"
+   * technique used in remote sensing to turn a single index value into
+   * an estimated % cover, by linearly scaling it between a configured
+   * floor (treated as 0% cover) and ceiling (treated as 100% cover):
+   *
+   *   vegetation% = clamp01((ndvi - NDVI_FLOOR) / (NDVI_CEIL - NDVI_FLOOR)) * 100
+   *   water%      = clamp01((ndwi - NDWI_FLOOR) / (NDWI_CEIL - NDWI_FLOOR)) * 100
+   *
+   * Floor/ceiling values live in CONFIG.LULC_THRESHOLDS so they can be
+   * retuned without touching this logic — same pattern as
+   * CONFIG.IMPACT_THRESHOLDS above.
+   *
+   * This is only ever used as a fallback when no field-verified
+   * lulc_analysis row exists for the intervention — see app.js. It
+   * returns null (rendered as "pending") if the satellite row is
+   * missing any of the four NDVI/NDWI values it needs.
+   *
+   * @param {object} satellite - row from satellite_analysis (may be null)
+   * @returns {{before_vegetation:number, after_vegetation:number, before_water:number, after_water:number, derived:true}|null}
+   */
+  function deriveLulcFromIndices(satellite) {
+    if (!satellite ||
+        satellite.before_ndvi == null || satellite.after_ndvi == null ||
+        satellite.before_ndwi == null || satellite.after_ndwi == null) {
+      return null;
+    }
+
+    const T = CONFIG.LULC_THRESHOLDS;
+    const clamp01 = (x) => Math.max(0, Math.min(1, x));
+    const round1 = (x) => Math.round(x * 10) / 10;
+    const vegPct = (ndvi) => round1(clamp01((ndvi - T.NDVI_FLOOR) / (T.NDVI_CEIL - T.NDVI_FLOOR)) * 100);
+    const waterPct = (ndwi) => round1(clamp01((ndwi - T.NDWI_FLOOR) / (T.NDWI_CEIL - T.NDWI_FLOOR)) * 100);
+
+    return {
+      before_vegetation: vegPct(satellite.before_ndvi),
+      after_vegetation: vegPct(satellite.after_ndvi),
+      before_water: waterPct(satellite.before_ndwi),
+      after_water: waterPct(satellite.after_ndwi),
+      derived: true // flag consumed by ui.js to label this as an estimate, not field data
+    };
   }
 
   function formatSignedPercent(n) {
@@ -167,5 +217,5 @@ const IMPACT = (() => {
     }
   }
 
-  return { STATUS, assess, badgeMeta, formatSigned, indicatorStatus, lulcCategories, formatSignedPercent };
+  return { STATUS, assess, badgeMeta, formatSigned, indicatorStatus, lulcCategories, deriveLulcFromIndices, formatSignedPercent };
 })();

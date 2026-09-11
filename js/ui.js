@@ -223,7 +223,15 @@ const UI = (() => {
     const ndviMeta = IMPACT.badgeMeta(ndviStatus);
     const ndwiMeta = IMPACT.badgeMeta(ndwiStatus);
 
-    const lulcRows = IMPACT.lulcCategories(lulc).map(cat => `
+    // Prefer a real, field-verified lulc_analysis row if one exists.
+    // Otherwise fall back to an estimate derived from this same
+    // intervention's NDVI/NDWI values (see IMPACT.deriveLulcFromIndices) —
+    // still real data, just a coarser estimate, and clearly labelled as
+    // such below rather than presented as a field classification.
+    const lulcSource = lulc || IMPACT.deriveLulcFromIndices(satellite);
+    const lulcIsDerived = !lulc && !!lulcSource;
+
+    const lulcRows = IMPACT.lulcCategories(lulcSource).map(cat => `
       <tr>
         <td>${escapeHtml(cat.label)}</td>
         <td>${cat.before.toFixed(1)}%</td>
@@ -282,12 +290,17 @@ const UI = (() => {
 
       <div class="analysis-panel">
         <h3>LULC (Land Use / Land Cover)</h3>
-        ${lulc ? `
+        ${lulcSource ? `
           <table class="analysis-lulc-table">
             <thead><tr><th>Category</th><th>Before</th><th>After</th><th>Change</th></tr></thead>
             <tbody>${lulcRows}</tbody>
           </table>
           <div class="analysis-lulc-chart-box"><canvas id="chartLulcAnalysis"></canvas></div>
+          <p class="muted-small" style="margin-top:8px;">
+            ${lulcIsDerived
+              ? 'Estimated from this intervention\u2019s NDVI/NDWI values (fractional-cover approximation) — not a field-verified classification. See js/impact.js.'
+              : 'Field-verified LULC classification.'}
+          </p>
         ` : `<p class="muted">No LULC analysis data available yet for this intervention.</p>`}
       </div>
 
@@ -303,7 +316,7 @@ const UI = (() => {
     // Charts must be rendered after the canvases above exist in the DOM.
     Charts.renderNdvi('chartNdviAnalysis', satellite);
     Charts.renderNdwi('chartNdwiAnalysis', satellite);
-    Charts.renderLulc('chartLulcAnalysis', lulc);
+    Charts.renderLulc('chartLulcAnalysis', lulcSource);
   }
 
   /**

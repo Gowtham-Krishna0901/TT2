@@ -20,11 +20,11 @@ const CONFIG = {
   APP_TAGLINE: 'Smart Watershed Monitoring System',
 
   // --- Data source -------------------------------------------------
-  USE_DEMO_DATA: false,               // false => read from Supabase instead
+  USE_DEMO_DATA: true,               // false => read from Supabase instead
 
   // --- Supabase (anon/public key only — safe to expose client-side) -
-  SUPABASE_URL: 'https://tknbijlujridmztkuulp.supabase.co',
-  SUPABASE_ANON_KEY: 'sb_publishable_w9SZthdAa3avUbLchfxb7Q_FpVJ6GNu',
+  SUPABASE_URL: 'https://YOUR-PROJECT-REF.supabase.co',
+  SUPABASE_ANON_KEY: 'YOUR-SUPABASE-ANON-PUBLIC-KEY',
 
   // --- Map defaults --------------------------------------------------
   // Centered on the average of the 5 real watershed sites (CD01–CD05);
@@ -61,5 +61,21 @@ const CONFIG = {
     NDVI_STRONG: 0.10,          // |ndvi_change| at/above this wins a disagreement
     NDWI_STRONG: 0.10,          // |ndwi_change| at/above this wins a disagreement
     LULC_SUPPORT_BAND: 3        // combined veg+water % point change used as tie-break
+  },
+
+  // --- LULC derived from NDVI/NDWI (Vegetation + Water only) ----------
+  // We don't have a QGIS-classified LULC raster, so LULC is limited to
+  // two categories — Vegetation, Water — and their % cover is ESTIMATED
+  // from the scalar NDVI/NDWI values already in satellite_analysis,
+  // using a standard linear fractional-cover scaling (not invented
+  // numbers — see IMPACT.deriveLulcFromIndices() in js/impact.js).
+  // If a real lulc_analysis row is ever supplied for an intervention,
+  // that field-verified data is used instead and this estimate is
+  // skipped for it.
+  LULC_THRESHOLDS: {
+    NDVI_FLOOR: -0.1,  // NDVI at/below this => treated as 0% vegetation cover
+    NDVI_CEIL: 0.8,    // NDVI at/above this => treated as 100% vegetation cover
+    NDWI_FLOOR: -0.3,  // NDWI at/below this => treated as 0% water cover
+    NDWI_CEIL: 0.3     // NDWI at/above this => treated as 100% water cover
   }
 };
