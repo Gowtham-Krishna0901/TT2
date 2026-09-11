@@ -243,7 +243,7 @@ const UI = (() => {
     // intervention's NDVI/NDWI values (see IMPACT.deriveLulcFromIndices) —
     // still real data, just a coarser estimate, and clearly labelled as
     // such below rather than presented as a field classification.
-    const lulcSource = lulc || IMPACT.deriveLulcFromIndices(satellite);
+    const lulcSource = IMPACT.resolveLulc(satellite, lulc);
     const lulcIsDerived = !lulc && !!lulcSource;
 
     const lulcRows = IMPACT.lulcCategories(lulcSource).map(cat => `

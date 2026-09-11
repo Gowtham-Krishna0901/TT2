@@ -217,5 +217,15 @@ const IMPACT = (() => {
     }
   }
 
-  return { STATUS, assess, badgeMeta, formatSigned, indicatorStatus, lulcCategories, deriveLulcFromIndices, formatSignedPercent };
+  /**
+   * Real field-verified lulc_analysis row if one exists, otherwise the
+   * NDVI/NDWI-derived estimate as a fallback. Centralized here so
+   * app.js (status calculation) and ui.js (display) never disagree
+   * about which LULC source is "the" one for a given intervention.
+   */
+  function resolveLulc(satellite, lulc) {
+    return lulc || deriveLulcFromIndices(satellite);
+  }
+
+  return { STATUS, assess, badgeMeta, formatSigned, indicatorStatus, lulcCategories, deriveLulcFromIndices, resolveLulc, formatSignedPercent };
 })();

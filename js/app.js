@@ -193,7 +193,7 @@
         DB.getSatelliteAnalysis(iv.intervention_id),
         DB.getLulcAnalysis(iv.intervention_id)
       ]);
-      const result = IMPACT.assess(sat.data, lulc.data);
+      const result = IMPACT.assess(sat.data, IMPACT.resolveLulc(sat.data, lulc.data));
       statusById[iv.intervention_id] = result.status;
     }));
     // Only commit if this is still the currently-selected watershed.
@@ -235,7 +235,7 @@
       return;
     }
 
-    const impactResult = IMPACT.assess(data.satellite, data.lulc);
+    const impactResult = IMPACT.assess(data.satellite, IMPACT.resolveLulc(data.satellite, data.lulc));
     state.selectedInterventionData = data;
     state.selectedImpactResult = impactResult;
 
