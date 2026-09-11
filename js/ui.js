@@ -203,6 +203,22 @@ const UI = (() => {
       </div>`;
   }
 
+  /**
+   * Overall impact status, styled as a small self-contained card
+   * (icon badge + label + explanation) rather than a plain inline
+   * badge — used next to the LULC chart in renderAnalysis().
+   */
+  function statusCard(meta, explanation) {
+    return `
+      <div class="status-card ${meta.className}">
+        <span class="status-card-icon">${meta.symbol}</span>
+        <div class="status-card-body">
+          <span class="status-card-label">${meta.label}</span>
+          <p class="status-card-text">${escapeHtml(explanation)}</p>
+        </div>
+      </div>`;
+  }
+
   function renderAnalysis({ intervention, satellite, lulc, evidence }, impactResult) {
     el('analysisSelectedLabel').textContent = `Selected Intervention: ${intervention.intervention_type} (${intervention.intervention_id})`;
 
@@ -296,10 +312,7 @@ const UI = (() => {
           </table>
           <div class="lulc-chart-status-row">
             <div class="analysis-lulc-chart-box"><canvas id="chartLulcAnalysis"></canvas></div>
-            <div class="lulc-status-side">
-              <span class="badge badge-large ${overallMeta.className}">${overallMeta.symbol} ${overallMeta.label}</span>
-              <p class="impact-explanation">${escapeHtml(impactResult.explanation)}</p>
-            </div>
+            <div class="lulc-status-side">${statusCard(overallMeta, impactResult.explanation)}</div>
           </div>
           <p class="muted-small" style="margin-top:8px;">
             ${lulcIsDerived
@@ -309,8 +322,7 @@ const UI = (() => {
         ` : `
           <p class="muted">No LULC analysis data available yet for this intervention.</p>
           <div class="lulc-chart-status-row lulc-chart-status-row-nograph">
-            <span class="badge badge-large ${overallMeta.className}">${overallMeta.symbol} ${overallMeta.label}</span>
-            <p class="impact-explanation">${escapeHtml(impactResult.explanation)}</p>
+            ${statusCard(overallMeta, impactResult.explanation)}
           </div>
         `}
       </div>
