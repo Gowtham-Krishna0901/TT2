@@ -34,6 +34,7 @@ const CONFIG = {
   MAP_DEFAULT_ZOOM: 6,
   MAP_MIN_ZOOM: 6,
   MAP_MAX_ZOOM: 18,
+  MAP_WATERSHED_ZOOM: 9,
 
   MAP_TILE_URL: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   MAP_TILE_ATTRIBUTION: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
