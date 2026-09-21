@@ -672,7 +672,17 @@ h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; }
 
 .muted { color: var(--muted); font-size: 13px; }
 .muted-small { color: var(--muted); font-size: 11px; }
-.lulc-verdict { margin: 8px 0 0; font-size: 13px; font-weight: 600; color: var(--improved); }
+.lulc-verdict {
+  margin: 8px 0 0;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--improved);
+  background: var(--improved-bg);
+  border: 1px solid var(--improved);
+  border-radius: 6px;
+  display: inline-block;
+}
 
 .impact-section .impact-row {
   display: flex;
