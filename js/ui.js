@@ -229,7 +229,7 @@ const UI = (() => {
    */
   function fieldImagePanel(fieldImageUrl) {
     const img = fieldImageUrl
-      ? `<img src="${escapeHtml(fieldImageUrl)}" alt="Field image of watershed" loading="lazy">`
+      ? `<img src="${escapeHtml(fieldImageUrl)}" alt="Field image of watershed">`
       : `<div class="sat-image-empty">No field image available yet</div>`;
     return `
       <div class="analysis-panel">
