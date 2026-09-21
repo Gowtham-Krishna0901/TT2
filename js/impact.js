@@ -199,6 +199,35 @@ const IMPACT = (() => {
     };
   }
 
+  /**
+   * One-line human takeaway from the LULC category changes — shown
+   * directly under the LULC stats table, separate from the overall
+   * IMPROVED/UNCHANGED/NEEDS ATTENTION status box. Only speaks up when
+   * there's a gain to report (per product decision, decreases are
+   * silently omitted here — the status box already covers the full
+   * picture, decreases included).
+   *
+   * @param {object} lulcSource - resolved lulc row (real or derived),
+   *   same shape lulcCategories() consumes.
+   * @returns {string|null} e.g. "Both are developed" / "Vegetation is
+   *   developed" / "Water is developed", or null if neither improved.
+   */
+  function lulcVerdict(lulcSource) {
+    const categories = lulcCategories(lulcSource);
+    if (!categories.length) return null;
+
+    const veg = categories.find(c => c.key === 'vegetation');
+    const water = categories.find(c => c.key === 'water');
+
+    const vegUp = !!veg && veg.change > 0;
+    const waterUp = !!water && water.change > 0;
+
+    if (vegUp && waterUp) return 'Both are developed';
+    if (vegUp) return 'Vegetation is developed';
+    if (waterUp) return 'Water is developed';
+    return null;
+  }
+
   function formatSignedPercent(n) {
     if (n === null || n === undefined || Number.isNaN(n)) return '—';
     return (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
@@ -227,5 +256,5 @@ const IMPACT = (() => {
     return lulc || deriveLulcFromIndices(satellite);
   }
 
-  return { STATUS, assess, badgeMeta, formatSigned, indicatorStatus, lulcCategories, deriveLulcFromIndices, resolveLulc, formatSignedPercent };
+  return { STATUS, assess, badgeMeta, formatSigned, indicatorStatus, lulcCategories, lulcVerdict, deriveLulcFromIndices, resolveLulc, formatSignedPercent };
 })();

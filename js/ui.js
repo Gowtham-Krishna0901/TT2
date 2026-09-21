@@ -275,6 +275,10 @@ const UI = (() => {
         <td class="${changeClass(cat.change)}">${IMPACT.formatSignedPercent(cat.change)}</td>
       </tr>`).join('');
 
+    // One-line takeaway under the LULC stats (e.g. "Vegetation is
+    // developed") — separate from the Overall Impact status box below.
+    const lulcVerdict = IMPACT.lulcVerdict(lulcSource);
+
     const location = intervention.latitude != null && intervention.longitude != null
       ? intervention.latitude.toFixed(6) + ', ' + intervention.longitude.toFixed(6)
       : '—';
@@ -333,6 +337,7 @@ const UI = (() => {
             <thead><tr><th>Category</th><th>Before</th><th>After</th><th>Change</th></tr></thead>
             <tbody>${lulcRows}</tbody>
           </table>
+          ${lulcVerdict ? `<p class="lulc-verdict">${escapeHtml(lulcVerdict)}</p>` : ''}
           <div class="lulc-chart-status-row">
             <div class="analysis-lulc-chart-box"><canvas id="chartLulcAnalysis"></canvas></div>
             <div class="lulc-status-side">${statusCard(overallMeta, impactResult.explanation)}</div>
