@@ -807,6 +807,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; }
 
 .analysis-lulc-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 13.5px;
   margin-bottom: 14px;
