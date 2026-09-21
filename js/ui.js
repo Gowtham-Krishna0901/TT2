@@ -219,7 +219,27 @@ const UI = (() => {
       </div>`;
   }
 
-  function renderAnalysis({ intervention, satellite, lulc, evidence }, impactResult) {
+  /**
+   * Field Image card — a single ground-level photo for the currently
+   * selected WATERSHED (not per-intervention field evidence; see
+   * fieldEvidencePanel() below for that). Sits between the NDVI/NDWI
+   * Indicators panel and the LULC panel, and re-renders automatically
+   * whenever the selected watershed changes because renderAnalysis()
+   * is always called with fresh data from app.js.
+   */
+  function fieldImagePanel(fieldImageUrl) {
+    const img = fieldImageUrl
+      ? `<img src="${escapeHtml(fieldImageUrl)}" alt="Field image of watershed" loading="lazy">`
+      : `<div class="sat-image-empty">No field image available yet</div>`;
+    return `
+      <div class="analysis-panel">
+        <h3>Field Image</h3>
+        <div class="field-image-box">${img}</div>
+        <p class="muted-small" style="margin-top:8px;">Ground-level photo of the watershed — updates automatically with the selected watershed.</p>
+      </div>`;
+  }
+
+  function renderAnalysis({ intervention, satellite, lulc, evidence, field_image }, impactResult) {
     el('analysisSelectedLabel').textContent = `Selected Intervention: ${intervention.intervention_type} (${intervention.intervention_id})`;
 
     if (!satellite) {
@@ -228,7 +248,8 @@ const UI = (() => {
           <div class="state-block state-empty">
             <p>No satellite analysis data available yet for this intervention.</p>
           </div>
-        </div>`;
+        </div>
+        ${fieldImagePanel(field_image)}`;
       return;
     }
 
@@ -302,6 +323,8 @@ const UI = (() => {
           </div>
         </div>
       </div>
+
+      ${fieldImagePanel(field_image)}
 
       <div class="analysis-panel">
         <h3>LULC (Land Use / Land Cover)</h3>

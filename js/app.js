@@ -21,6 +21,7 @@
   const state = {
     watersheds: [],
     selectedWatershedId: null,
+    selectedWatershedData: null,   // full row for the selected watershed (used for its field_image)
     interventions: [],       // raw list for selected watershed (Map tab)
     statusById: {},          // intervention_id -> impact status, for the current watershed's summary cards
     selectedInterventionId: null,
@@ -160,10 +161,12 @@
 
     if (watershedRes.error) { console.error(watershedRes.error); }
     if (watershedRes.data) {
+      state.selectedWatershedData = watershedRes.data;
       WSMap.setBoundary(watershedRes.data.geometry, watershedRes.data.watershed_name);
       const centroid = centroidOfGeometry(watershedRes.data.geometry);
       UI.renderWatershedInfo(watershedRes.data, centroid);
     } else {
+      state.selectedWatershedData = null;
       UI.renderWatershedInfo(null);
     }
 
@@ -236,6 +239,13 @@
     }
 
     const impactResult = IMPACT.assess(data.satellite, IMPACT.resolveLulc(data.satellite, data.lulc));
+
+    // Field Image (Analysis tab) is a property of the WATERSHED, not the
+    // intervention, and must track whichever watershed is currently
+    // selected — so it's pulled from state.selectedWatershedData rather
+    // than from anything DB.getImpactData() returned.
+    data.field_image = state.selectedWatershedData ? state.selectedWatershedData.field_image : null;
+
     state.selectedInterventionData = data;
     state.selectedImpactResult = impactResult;
 

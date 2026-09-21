@@ -33,12 +33,18 @@
 
 const DEMO_DATA = (() => {
 
+  // field_image: ground-level photo for the watershed, shown in the
+  // Analysis tab's "Field Image" card (between NDVI/NDWI and LULC).
+  // Not uploaded yet, so left null (no placeholder/fake URLs) until a
+  // real image is uploaded to Supabase Storage and the field_image
+  // column is filled in — see supabase/schema.sql and the setup
+  // instructions for this feature.
   const watersheds = [
-    { watershed_id: 'CD01', watershed_name: 'Viswanathapuram',    state: null, district: null, watershed_latitude: 11.805000,  watershed_longitude: 79.659944, geometry: null, created_at: null },
-    { watershed_id: 'CD02', watershed_name: 'Peddamungalachedu',  state: null, district: null, watershed_latitude: 16.495961,  watershed_longitude: 77.894172, geometry: null, created_at: null },
-    { watershed_id: 'CD03', watershed_name: 'Jagannathapuram',    state: null, district: null, watershed_latitude: 13.261128,  watershed_longitude: 80.168365, geometry: null, created_at: null },
-    { watershed_id: 'CD04', watershed_name: 'Veerapandi',         state: null, district: null, watershed_latitude: 9.966636,   watershed_longitude: 77.429217, geometry: null, created_at: null },
-    { watershed_id: 'CD05', watershed_name: 'Cuddalore',          state: null, district: null, watershed_latitude: 11.844412,  watershed_longitude: 79.735178, geometry: null, created_at: null }
+    { watershed_id: 'CD01', watershed_name: 'Viswanathapuram',    state: null, district: null, watershed_latitude: 11.805000,  watershed_longitude: 79.659944, geometry: null, field_image: null, created_at: null },
+    { watershed_id: 'CD02', watershed_name: 'Peddamungalachedu',  state: null, district: null, watershed_latitude: 16.495961,  watershed_longitude: 77.894172, geometry: null, field_image: null, created_at: null },
+    { watershed_id: 'CD03', watershed_name: 'Jagannathapuram',    state: null, district: null, watershed_latitude: 13.261128,  watershed_longitude: 80.168365, geometry: null, field_image: null, created_at: null },
+    { watershed_id: 'CD04', watershed_name: 'Veerapandi',         state: null, district: null, watershed_latitude: 9.966636,   watershed_longitude: 77.429217, geometry: null, field_image: null, created_at: null },
+    { watershed_id: 'CD05', watershed_name: 'Cuddalore',          state: null, district: null, watershed_latitude: 11.844412,  watershed_longitude: 79.735178, geometry: null, field_image: null, created_at: null }
   ];
 
   const interventions = [
