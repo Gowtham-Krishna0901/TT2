@@ -829,6 +829,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; }
 }
 
 .analysis-lulc-table td:not(:first-child) { text-align: right; font-weight: 600; }
+.analysis-lulc-table th:not(:first-child) { text-align: right; }
 
 .analysis-lulc-chart-box {
   height: 220px;
