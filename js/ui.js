@@ -340,6 +340,12 @@ const UI = (() => {
         <h3>LULC (Land Use / Land Cover)</h3>
         ${lulcSource ? `
           <table class="analysis-lulc-table">
+            <colgroup>
+              <col style="width:40%">
+              <col style="width:20%">
+              <col style="width:20%">
+              <col style="width:20%">
+            </colgroup>
             <thead><tr><th>Category</th><th>Before</th><th>After</th><th>Change</th></tr></thead>
             <tbody>${lulcRows}${lulcVerdictRow}</tbody>
           </table>
