@@ -120,5 +120,18 @@ const WSMap = (() => {
     if (map) map.invalidateSize();
   }
 
-  return { init, setBoundary, setInterventions, highlightSelected, invalidateSize };
+  /**
+   * Move the map to a lat/lng (used when a watershed has no boundary
+   * polygon, so setBoundary() can't fit the view). animate=false jumps
+   * instantly, which is what we want when the Map tab is hidden.
+   */
+  function flyToLocation(lat, lng, zoom, animate = true) {
+    if (!map || lat == null || lng == null) return;
+    const z = zoom ?? (CONFIG.MAP_WATERSHED_ZOOM ?? 13);
+    map.invalidateSize();
+    if (animate) map.flyTo([lat, lng], z, { duration: 1.5 });
+    else map.setView([lat, lng], z, { animate: false });
+  }
+
+  return { init, setBoundary, setInterventions, highlightSelected, invalidateSize, flyToLocation };
 })();

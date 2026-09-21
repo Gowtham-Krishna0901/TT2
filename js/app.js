@@ -165,6 +165,13 @@
       WSMap.setBoundary(watershedRes.data.geometry, watershedRes.data.watershed_name);
       const centroid = centroidOfGeometry(watershedRes.data.geometry);
       UI.renderWatershedInfo(watershedRes.data, centroid);
+
+      // No boundary polygon => setBoundary() can't fit the view, so fly to the point instead.
+      if (!watershedRes.data.geometry) {
+        const lat = watershedRes.data.watershed_latitude ?? (centroid && centroid.latitude);
+        const lng = watershedRes.data.watershed_longitude ?? (centroid && centroid.longitude);
+        WSMap.flyToLocation(lat, lng, CONFIG.MAP_WATERSHED_ZOOM ?? 13, state.activeTab === 'map');
+      }
     } else {
       state.selectedWatershedData = null;
       UI.renderWatershedInfo(null);
