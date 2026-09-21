@@ -275,9 +275,15 @@ const UI = (() => {
         <td class="${changeClass(cat.change)}">${IMPACT.formatSignedPercent(cat.change)}</td>
       </tr>`).join('');
 
-    // One-line takeaway under the LULC stats (e.g. "Vegetation is
-    // developed") — separate from the Overall Impact status box below.
+    // One-line takeaway (e.g. "Vegetation is developed") — shown as an
+    // extra row at the bottom of the LULC table itself, not a separate
+    // callout. Only added when at least one category actually improved.
     const lulcVerdict = IMPACT.lulcVerdict(lulcSource);
+    const lulcVerdictRow = lulcVerdict ? `
+      <tr class="lulc-verdict-row">
+        <td>LULC (Land Use / Land Cover)</td>
+        <td colspan="3">${escapeHtml(lulcVerdict)}</td>
+      </tr>` : '';
 
     const location = intervention.latitude != null && intervention.longitude != null
       ? intervention.latitude.toFixed(6) + ', ' + intervention.longitude.toFixed(6)
@@ -335,9 +341,8 @@ const UI = (() => {
         ${lulcSource ? `
           <table class="analysis-lulc-table">
             <thead><tr><th>Category</th><th>Before</th><th>After</th><th>Change</th></tr></thead>
-            <tbody>${lulcRows}</tbody>
+            <tbody>${lulcRows}${lulcVerdictRow}</tbody>
           </table>
-          ${lulcVerdict ? `<p class="lulc-verdict">${escapeHtml(lulcVerdict)}</p>` : ''}
           <div class="lulc-chart-status-row">
             <div class="analysis-lulc-chart-box"><canvas id="chartLulcAnalysis"></canvas></div>
             <div class="lulc-status-side">${statusCard(overallMeta, impactResult.explanation)}</div>
