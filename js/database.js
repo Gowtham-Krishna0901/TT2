@@ -26,7 +26,7 @@ const DB = (() => {
     }
     const client = getSupabaseClient();
     if (!client) return { data: null, error: 'Supabase client not configured.' };
-    const { data, error } = await client.from('watersheds').select('*').order('watershed_name');
+    const { data, error } = await client.from('watersheds').select('*').order('watershed_id');
     return { data, error: error ? error.message : null };
   }
 
