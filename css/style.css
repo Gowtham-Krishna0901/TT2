@@ -673,7 +673,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; }
 .muted { color: var(--muted); font-size: 13px; }
 .muted-small { color: var(--muted); font-size: 11px; }
 .lulc-verdict-row td { font-weight: 600; border-top: 1px solid var(--line); }
-.lulc-verdict-row td:not(:first-child) { text-align: left; }
+.analysis-lulc-table .lulc-verdict-row td:not(:first-child) { text-align: left; }
 
 .impact-section .impact-row {
   display: flex;
