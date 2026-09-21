@@ -127,7 +127,7 @@ const WSMap = (() => {
    */
   function flyToLocation(lat, lng, zoom, animate = true) {
     if (!map || lat == null || lng == null) return;
-    const z = zoom ?? (CONFIG.MAP_WATERSHED_ZOOM ?? 13);
+    const z = zoom ?? (CONFIG.MAP_WATERSHED_ZOOM ?? 9);
     map.invalidateSize();
     if (animate) map.flyTo([lat, lng], z, { duration: 1.5 });
     else map.setView([lat, lng], z, { animate: false });
