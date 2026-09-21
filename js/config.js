@@ -24,7 +24,7 @@ const CONFIG = {
 
   // --- Supabase (anon/public key only — safe to expose client-side) -
   SUPABASE_URL: 'https://tknbijlujridmztkuulp.supabase.co',
-  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRrbmJpamx1anJpZG16dGt1dWxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg5NzUzNTEsImV4cCI6MjEwNDU1MTM1MX0.NVbszkKToTsw7OKl0BQS6eIhCvEOiJG6ESAkdhKDtUI',
+  SUPABASE_ANON_KEY: 'sb_publishable_w9SZthdAa3avUbLchfxb7Q_FpVJ6GNu',
 
   // --- Map defaults --------------------------------------------------
   // Centered on the average of the 5 real watershed sites (CD01–CD05);
